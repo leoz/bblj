@@ -1,0 +1,25 @@
+
+#main_content .ui-collapsible .ui-collapsible-heading .ui-btn {
+	border-top-width: 1px !important;
+}
+
+#main_content {
+	padding-top: 0px;
+}
+
+.record-date {
+	float: right;
+	font-size: 0.8em;
+	font-weight: normal;
+}
+
+.record-icon {
+	margin-left: -10px;
+	margin-top: -10px;
+	margin-bottom: -10px;
+	width: 32px;
+}
+
+.record-title {
+	margin-left: 10px;
+}
