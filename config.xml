@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<widget xmlns="http://www.w3.org/ns/widgets" 
+	xmlns:rim="http://www.blackberry.com/ns/widgets"
+	version="0.0.1.0" id="BBLJ">
+
+	<name>BBLJ</name> 
+	<author>LeoZ</author>
+	<description>BlackBerry LiveJournal Client</description>
+	<icon src="images/icon.png"/>
+	<content src="index.html"/>
+
+	<rim:permissions> 
+		<rim:permit>use_camera</rim:permit>
+		<rim:permit>access_shared</rim:permit>
+	</rim:permissions>
+
+	<access uri="http://www.livejournal.com/" subdomains="true" />
+
+</widget>
