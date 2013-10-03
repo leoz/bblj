@@ -15,5 +15,6 @@
 	</rim:permissions>
 
 	<access uri="http://www.livejournal.com/" subdomains="true" />
+	<access subdomains="true" uri="*" />
 
 </widget>
