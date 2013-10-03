@@ -1,6 +1,27 @@
-$(document).on('pagebeforeshow', '#page1', function(){ 
+$(document).on('pagebeforeshow', '#main_page', function(){ 
+	console.log("pagebeforeshow - main_page");
 	lj_getchallenge();
 	lj_getevents();
+});
+
+$(document).on('pagebeforeshow', '#login_page', function(){
+
+	console.log("pagebeforeshow - login_page");
+
+	$('#login-username').val('');
+	$('#login-password').val('');
+	$('#login-button').addClass('ui-disabled');
+
+	$(".login-input").on("input", function (e) {
+		var username = $('#login-username').val();
+		var password = $('#login-password').val();
+		if(username != '' && password != '') {
+			$('#login-button').removeClass('ui-disabled');
+		}
+		else {
+			$('#login-button').addClass('ui-disabled');
+		}
+	});
 });
 
 function lj_getchallenge() {
@@ -91,8 +112,8 @@ function lj_ui_add_record(num, record) {
 	content += event_html;
 	content += '</div>';
 	
-	$("#page1 div:jqmData(role=content)").append (content);
-	$("#page1 div:jqmData(role=collapsible)").collapsible();
+	$("#main_page div:jqmData(role=content)").append (content);
+	$("#main_page div:jqmData(role=collapsible)").collapsible();
 }
 
 function array_buffer_to_string(buf, callback) {
@@ -116,6 +137,13 @@ function do_login() {
 	store_login(username, password);
 
 	$.mobile.changePage("main.html");
+}
+
+function do_logout() {
+
+    console.log("do logout");
+
+	$.mobile.changePage("index.html");
 }
 
 function store_login(name, pass) {

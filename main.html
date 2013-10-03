@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <title>My journal</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="lib/jquery-2.0.3.js"></script>
-        <script src="lib/jquery.xmlrpc.js"></script>
-        <script src="lib/jquery.dateFormat-1.0.js"></script>
-        <script src="lib/jquery.mobile-1.3.2.js"></script>
-        <script src="js/main.js"></script>
-        <link href="css/jquery.mobile.structure-1.3.2.css" rel="stylesheet">
-        <link href="css/jquery.mobile.theme-1.3.2.css" rel="stylesheet">
-        <link href="css/main.css" rel="stylesheet">
-    </head>
+<head>
+    <title>My journal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="lib/jquery-2.0.3.js"></script>
+    <script src="lib/jquery.xmlrpc.js"></script>
+    <script src="lib/jquery.dateFormat-1.0.js"></script>
+    <script src="lib/jquery.mobile-1.3.2.js"></script>
+    <script src="js/main.js"></script>
+    <link href="css/jquery.mobile.structure-1.3.2.css" rel="stylesheet">
+    <link href="css/jquery.mobile.theme-1.3.2.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
 
-    <body>
-        <div data-role="page" id="page1">
-            <div data-role="header" data-position="fixed">
-                <h1>My journal</h1>
-            </div>
-            <div data-role="content" id="main_content">
-            </div>
-            <div data-role="footer" data-position="fixed">
-                <h1>Footer</h1>
+    <div data-role="page" id="main_page">
+        <div data-role="header" data-position="fixed">
+            <h1>My journal</h1>
+        </div>
+        <div data-role="content" id="main_content">
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <h1>Footer</h1>
+        </div>
+
+        <div data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#" data-icon="back" onclick="do_logout(); return false" rel="external">Log out</a></li>
+                    <li><a href="#" data-icon="home" class="ui-btn-active">My journal</a></li>
+                    <li><a href="#" data-icon="gear">Setup</a></li>
+                </ul>
             </div>
         </div>
-    </body>
 
+    </div>
+
+</body>
 </html>

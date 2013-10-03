@@ -19,12 +19,12 @@
             <div data-role="content" id="login_content">
 
                 <label for="login-username">Username:</label>
-                <input type="text" name="login-username" id="login-username" value="">
+                <input type="text" name="login-username" class="login-input" id="login-username" value="">
 
                 <label for="login-password">Password:</label>
-                <input type="password" name="login-password" id="login-password" value="" autocomplete="off">
+                <input type="password" name="login-password" class="login-input" id="login-password" value="" autocomplete="off">
 
-                <a href="#" data-role="button" onclick="do_login(); return false" rel="external">Log in</a>
+                <a href="#" data-role="button" id="login-button" class="ui-disabled" onclick="do_login(); return false" rel="external">Log in</a>
 
             </div>
         </div>
