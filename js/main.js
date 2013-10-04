@@ -142,7 +142,6 @@ function do_login() {
 
 	store_login(username, password);
 
-	lj_getchallenge();
 	lj_login();
 }
 

@@ -2,7 +2,7 @@
  * LiveJournal JavaScript API
  */
 
-function lj_getchallenge() {
+function lj_login() {
 	$.xmlrpc({
 	    url: 'http://www.livejournal.com/interface/xmlrpc',
 	    methodName: 'LJ.XMLRPC.getchallenge',
@@ -11,6 +11,7 @@ function lj_getchallenge() {
 	    	console.log(response);
 	    	console.log(status);
 	    	console.log("LJ.XMLRPC.getchallenge - success");
+	        lj_login_int(response[0].challenge);
 		},
 	    error: function(jqXHR, status, error) {
 	    	console.log(status);
@@ -20,19 +21,23 @@ function lj_getchallenge() {
 	});
 }
 
-function lj_login() {
+function lj_login_int(challenge) {
 
 	var user_login = JSON.parse(localStorage.getItem("lj_user_login"));
 
 	var username = user_login.username;
 	var password = user_login.password;
+	var response = $.md5(challenge + $.md5(password));
 
 	$.xmlrpc({
 	    url: 'http://www.livejournal.com/interface/xmlrpc',
 	    methodName: 'LJ.XMLRPC.login',
 	    params: [ {
 			'username' : username,
-			'password' : password
+			'auth_method' : 'challenge',
+			'auth_challenge' : challenge,
+			'auth_response' : response,
+			'ver' : '1'
 		} ],
 	    success: function(response, status, jqXHR) {
 	    	console.log(response);
@@ -51,21 +56,43 @@ function lj_login() {
 }
 
 function lj_getevents() {
+	$.xmlrpc({
+	    url: 'http://www.livejournal.com/interface/xmlrpc',
+	    methodName: 'LJ.XMLRPC.getchallenge',
+	    params: [],
+	    success: function(response, status, jqXHR) {
+	    	console.log(response);
+	    	console.log(status);
+	    	console.log("LJ.XMLRPC.getchallenge - success");
+	        lj_getevents_int(response[0].challenge);
+		},
+	    error: function(jqXHR, status, error) {
+	    	console.log(status);
+	    	console.log(error);
+	    	console.log("LJ.XMLRPC.getchallenge - error");
+		}
+	});
+}
+
+function lj_getevents_int(challenge) {
 
 	var user_login = JSON.parse(localStorage.getItem("lj_user_login"));
 
 	var username = user_login.username;
 	var password = user_login.password;
+	var response = $.md5(challenge + $.md5(password));
 
 	$.xmlrpc({
 	    url: 'http://www.livejournal.com/interface/xmlrpc',
 	    methodName: 'LJ.XMLRPC.getevents',
 	    params: [ {
 			'username' : username,
-			'password' : password,
+			'auth_method' : 'challenge',
+			'auth_challenge' : challenge,
+			'auth_response' : response,
+			'ver' : '1',
 			'selecttype' : 'lastn',
-			'howmany' : '20',
-			'ver' : '1'
+			'howmany' : '20'
 		} ],
 	    success: function(response, status, jqXHR) {
 	    	console.log(response);
