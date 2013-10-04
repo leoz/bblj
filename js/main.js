@@ -1,3 +1,23 @@
+$(document).ready(function() {
+	console.log("ready!");
+});
+$( window ).load(function() {
+    console.log( "window loaded" );
+});
+
+$(document).on('pagecreate', '#start_page', function(){ 
+	console.log("pagecreate - start_page");
+
+	var user_login = JSON.parse(localStorage.getItem("lj_user_login"));
+
+	if(!user_login || !user_login.username || user_login.username == '') {
+		$.mobile.changePage("login.html");
+	}
+	else {
+		$.mobile.changePage("main.html");
+	}
+});
+
 $(document).on('pagebeforeshow', '#main_page', function(){ 
 	console.log("pagebeforeshow - main_page");
 	lj_getchallenge();
@@ -143,7 +163,9 @@ function do_logout() {
 
     console.log("do logout");
 
-	$.mobile.changePage("index.html");
+	store_login('','');
+
+	$.mobile.changePage("login.html");
 }
 
 function store_login(name, pass) {
