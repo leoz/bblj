@@ -1,11 +1,9 @@
-$(document).ready(function() {
-	console.log("ready!");
-});
-$( window ).load(function() {
-    console.log( "window loaded" );
-});
+/*!
+ * Main BBLJ functions
+ */
 
-$(document).on('pagecreate', '#start_page', function(){ 
+$(document).on('pagecreate', '#start_page', function(){
+
 	console.log("pagecreate - start_page");
 
 	var user_login = JSON.parse(localStorage.getItem("lj_user_login"));
@@ -18,9 +16,10 @@ $(document).on('pagecreate', '#start_page', function(){
 	}
 });
 
-$(document).on('pagebeforeshow', '#main_page', function(){ 
+$(document).on('pagebeforeshow', '#main_page', function(){
+
 	console.log("pagebeforeshow - main_page");
-	lj_getchallenge();
+
 	lj_getevents();
 });
 
@@ -28,9 +27,7 @@ $(document).on('pagebeforeshow', '#login_page', function(){
 
 	console.log("pagebeforeshow - login_page");
 
-	$('#login-username').val('');
-	$('#login-password').val('');
-	$('#login-button').addClass('ui-disabled');
+	lj_ui_reset_login();
 
 	$(".login-input").on("input", function (e) {
 		var username = $('#login-username').val();
@@ -44,52 +41,10 @@ $(document).on('pagebeforeshow', '#login_page', function(){
 	});
 });
 
-function lj_getchallenge() {
-	$.xmlrpc({
-	    url: 'http://www.livejournal.com/interface/xmlrpc',
-	    methodName: 'LJ.XMLRPC.getchallenge',
-	    params: [],
-	    success: function(response, status, jqXHR) {
-	    	console.log("LJ.XMLRPC.getchallenge - success");
-		},
-	    error: function(jqXHR, status, error) {
-	    	console.log("LJ.XMLRPC.getchallenge - error");
-		}
-	});
-}
-
-function lj_getevents() {
-
-	var user_login = JSON.parse(localStorage.getItem("lj_user_login"));
-
-	var username = user_login.username;
-	var password = user_login.password;
-
-	$.xmlrpc({
-	    url: 'http://www.livejournal.com/interface/xmlrpc',
-	    methodName: 'LJ.XMLRPC.getevents',
-	    params: [ {
-			'username' : username,
-			'password' : password,
-			'selecttype' : 'lastn',
-			'howmany' : '20',
-			'ver' : '1'
-		} ],
-	    success: function(response, status, jqXHR) {
-	    	console.log(response);
-	    	console.log(status);
-	    	console.log("LJ.XMLRPC.getevents - success");
-			
-			$.each( response[0].events, function( i, item ) {
-				lj_ui_add_record(i, item);
-			});
-		},
-	    error: function(jqXHR, status, error) {
-	    	console.log(status);
-	    	console.log(error);
-	    	console.log("LJ.XMLRPC.getevents - error");
-		}
-	});
+function lj_ui_reset_login() {
+	$('#login-username').val('');
+	$('#login-password').val('');
+	$('#login-button').addClass('ui-disabled');
 }
 
 function lj_ui_add_record(num, record) {
@@ -137,12 +92,43 @@ function lj_ui_add_record(num, record) {
 }
 
 function array_buffer_to_string(buf, callback) {
+
     var bb = new Blob([buf]);
     var f = new FileReader();
     f.onload = function(e) {
         callback(e.target.result)
     }
     f.readAsText(bb);
+}
+
+function lj_ui_show_error(error) {
+
+	var title = "Log in Error";
+	var message = error.message;
+
+	var template = '';
+	template += '<div data-role="popup" id="tooltip" class="ui-content lj_popup" data-theme="e" data-overlay-theme="a" style="max-width:350px;">';
+	template += '<h4>';
+	template += title;
+	template += '</h4>';
+	template += '<p>';
+	template += message;
+	template += '</p>';
+	template += '</div>';
+	
+	$.mobile.activePage.append(template).trigger("create");
+	$.mobile.activePage.find(".lj_popup").popup().popup("open");
+	window.setTimeout(function() {$('.lj_popup').popup('close')}, 1500);
+}
+
+function lj_ui_login(logged_in) {
+	if(logged_in) {
+		$.mobile.changePage("main.html");
+	}
+	else {
+		lj_ui_reset_login();
+		store_login('','');
+	}
 }
 
 function do_login() {
@@ -156,7 +142,8 @@ function do_login() {
 
 	store_login(username, password);
 
-	$.mobile.changePage("main.html");
+	lj_getchallenge();
+	lj_login();
 }
 
 function do_logout() {
