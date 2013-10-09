@@ -16,6 +16,7 @@
 
 	<feature id="blackberry.invoke"/>
 	<feature id="blackberry.app"/>
+	<feature id="blackberry.system"/>
 
 	<access uri="http://www.livejournal.com/" subdomains="true" />
 	<access subdomains="true" uri="*" />
