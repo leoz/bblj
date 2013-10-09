@@ -1,0 +1,11 @@
+
+html, body { padding: 0; margin: 0; }
+html, .ui-mobile, .ui-mobile body {
+	height: 415px;
+}
+.ui-mobile, .ui-mobile .ui-page {
+	min-height: 415px;
+}
+.ui-content{
+	padding:10px 15px 0px 15px;
+}

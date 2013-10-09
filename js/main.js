@@ -163,3 +163,4 @@ function store_login(name, pass) {
 	
 	localStorage.setItem('lj_user_login', JSON.stringify(user_login));
 }
+

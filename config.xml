@@ -14,6 +14,9 @@
 		<rim:permit>access_shared</rim:permit>
 	</rim:permissions>
 
+	<feature id="blackberry.invoke"/>
+	<feature id="blackberry.app"/>
+
 	<access uri="http://www.livejournal.com/" subdomains="true" />
 	<access subdomains="true" uri="*" />
 
